@@ -1,8 +1,7 @@
 from flask import (
     Blueprint, flash, g, redirect, request, url_for, jsonify
 )
-from werkzeug.exceptions import abort
-import json
+
 
 from flaskr.log import get_post
 from flaskr.db import get_db
