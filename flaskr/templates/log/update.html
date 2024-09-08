@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Edit {{ post['date_time'] }} Workout{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  <form method="post">
+    <label for="date_time">Date and Time</label>
+    <input name="date_time" id="date_time"
+      value="{{ request.form['date_time'] or post['date_time'] }}" required>
+    <label for="duration">Duration</label>
+    <input name="duration" id="duration"
+      value="{{ request.form['duration'] or post['duration'] }}" required>
+    <label for="distance">Distance</label>
+    <textarea name="distance" id="distance">{{ request.form['distance'] or post['distance'] }}</textarea>
+    <label for="route_nickname">Route Nickname</label>
+    <input name="route_nickname" id="route_nickname"
+      value="{{ request.form['route_nickname'] or post['route_nickname'] }}" required>
+    <label for="average_heart_rate">Average heart rate</label>
+    <input name="average_heart_rate" id="average_heart_rate"
+      value="{{ request.form['average_heart_rate'] or post['average_heart_rate'] }}" required>
+    <label for="max_heart_rate">Max heart rate</label>
+    <input name="max_heart_rate" id="max_heart_rate"
+      value="{{ request.form['max_heart_rate'] or post['max_heart_rate'] }}" required>
+    <input type="submit" value="Save">
+  </form>
+  <hr>
+  <form action="{{ url_for('log.delete', id=post['id']) }}" method="post">
+    <input class="danger" type="submit" value="Delete" onclick="return confirm('Are you sure?');">
+  </form>
+{% endblock %}

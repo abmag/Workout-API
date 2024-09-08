@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Workout Logs{% endblock %}</h1>
+  <a class="action" href="{{ url_for('log.create') }}">Log New Workout</a>
+{% endblock %}
+
+{% block content %}
+  {% for post in posts %}
+    <article class="post">
+      <header>
+        <div>
+          <h2>Workout on {{ post['date_time'].strftime('%Y-%m-%d %H:%M') }}</h2>
+          {% if post['route_nickname'] %}
+            <div class="route"><strong>Route: {{ post['route_nickname'] }}<strong></div>
+          {% endif %}
+        </div>
+        <a class="action" href="{{ url_for('log.update', id=post['id']) }}">Edit</a>
+      </header>
+      <div class="workout-details">
+        <p><strong>Duration:</strong> {{ post['duration'] // 60 }} hours {{ post['duration'] % 60 }} minutes</p>
+        <p><strong>Distance:</strong> {{ "%.2f"|format(post['distance']) }} km</p>
+        {% if post['average_heart_rate'] %}
+          <p><strong>Average Heart Rate:</strong> {{ post['average_heart_rate'] }} bpm</p>
+        {% endif %}
+        {% if post['max_heart_rate'] %}
+          <p><strong>Max Heart Rate:</strong> {{ post['max_heart_rate'] }} bpm</p>
+        {% endif %}
+      </div>
+    </article>
+    {% if not loop.last %}
+      <hr>
+    {% endif %}
+  {% endfor %}
+{% endblock %}
